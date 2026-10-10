@@ -5,7 +5,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN chmod +x gradlew && ./gradlew bootJar --no-daemon
+RUN apt-get update && apt-get install -y --no-install-recommends gradle \
+    && gradle bootJar --no-daemon \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8080
 
